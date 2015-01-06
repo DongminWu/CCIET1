@@ -1,0 +1,26 @@
+int ran e0/0-3
+switchport mode access
+int ran e1/0-3
+switchport mode access
+
+vtp domain CCIE
+vtp version 2
+vtp mode client
+vtp password CCIErock$
+
+int ran e2/0-3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+mac address-table aging-time 7200
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 14,24,46 priority 0
+spanning-tree vlan 15,23,57,67,999 priority 4096
+spanning-tree portfast default
+spanning-tree portfast bpduguard default
+
+int ran e3/0-3
+switchport mode access
+switchport access vlan 999
+shutdown

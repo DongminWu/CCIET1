@@ -1,4 +1,5 @@
 CCIET1
 ======
 
-config of CCIE test
+##first round: 
+*Begin at 4th Jan.*
