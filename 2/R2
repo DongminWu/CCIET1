@@ -1,0 +1,15 @@
+int e0/0-3
+switchport mode access
+int e1/0-3
+switchport mode access
+vtp domain CCIE
+vtp version 2
+vtp mode client
+vtp password CCIErock$
+int e2/0-3
+switchport trunk encapasulation dot1q
+switchport mode trunk
+
+router ospf 12345
+router-id 123.2.2.2
+network 123.0.0.0 0.255.255.255 area 0

@@ -1,0 +1,4 @@
+router eigrp cisco
+address-family ipv4 autonomous-system 45678
+topology base
+no auto-summary

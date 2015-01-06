@@ -1,2 +1,5 @@
 int s1/0
 encapsulation PPP
+int s1/0
+ppp chap hostname ACME_R19
+ppp chap password ccie

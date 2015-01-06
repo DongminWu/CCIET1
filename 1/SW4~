@@ -17,3 +17,8 @@ spanning-tree vlan 49,89,101,411,999 priority 4096
 spanning-tree vlan 34,38,310 priority 0
 spanning-tree portfast edge default
 spanning-tree portfast edge bpduguard default
+
+int ran e3/0-3
+switchport mode access
+switchport access vlan 999
+shutdown

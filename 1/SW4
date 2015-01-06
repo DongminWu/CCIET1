@@ -22,3 +22,8 @@ int ran e3/0-3
 switchport mode access
 switchport access vlan 999
 shutdown
+
+router eigrp 45678
+network 123.0.0.0 0.255.255.255
+no auto-summary
+
