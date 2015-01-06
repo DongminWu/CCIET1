@@ -48,3 +48,5 @@ change the vtp mode to *transparent*
 ==R18 R19 SW5 SW6==
 1. set eigrp 45678 network
 2. no auto-summary
+
+##
