@@ -1,3 +1,21 @@
 router osfp 12345
 router-id 123.1.1.1
 network 123.0.0.0 0.255.255.255 area 0
+router bgp 12345
+bgp log-neighbor-changes
+bgp router-id 123.1.1.1
+no bgp ipv4-unicast
+neighbor iBGP peer-group
+neighbor iBGP remote-as 12345
+neighbor iBGP update-sources Loopback 0
+neighbor 123.2.2.2 peer-group iBGP
+neighbor 123.3.3.3 peer-group iBGP
+neighbor 123.6.6.6 peer-group iBGP
+neighbor 123.7.7.7 peer-group iBGP
+
+address-family ipv4
+neighbor iBGP router-reflecto-client
+neighbor 123.2.2.2 activate
+neighbor 123.3.3.3 activate
+neighbor 123.6.6.6 activate
+neighbor 123.7.7.7 activate

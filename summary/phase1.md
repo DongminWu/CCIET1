@@ -49,4 +49,17 @@ change the vtp mode to *transparent*
 1. set eigrp 45678 network
 2. no auto-summary
 
-##
+##AS12345 BGP
+*R1*
+1. set up bgp, open log, no unicast
+2. peer-group iBGP 
+2. set iBGP as 12345
+3. peer-group other routers (R2,R3, R6 R7)
+4. goto address-family
+5. iBGP route-reflector-client
+6. activate R2, R3, R6,R7
+
+*R2 R3 R6 R7*
+1. set up bgp open log, no unicast
+2. set R1 as 12345
+3. activate R1

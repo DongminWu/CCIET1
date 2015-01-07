@@ -1,0 +1,8 @@
+int s1/0
+encapsulation PPP
+int s1/0
+ppp chap hostname ACME_R18
+ppp chap password ccie
+router eigrp 45678
+network 123.0.0.0 0.255.255.255
+no auto-summary
