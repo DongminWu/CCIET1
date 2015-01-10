@@ -1,0 +1,65 @@
+#Layer3
+
+##AS 65112 BGP
+
+*R2 R3*
+
+1. configuarate ip vrf GREEN/BLUE/..../INET rd/route-target XX:XX(12 to 15, 99)
+2. open e1/0
+3. set up e1/0.12-0.99 
+4. -(encapsulate )
+5. -(vrf forwarding COLOR)
+6. -set up ip address
+7. into bgp **12345**
+8. set up vrf as 65112
+9. active vrf
+
+*R20*
+
+1. open e1/0
+2. set up e1/0.12-0.99
+3. encapsulate
+4. set ip address
+5. set up e1/1 as e1/0
+6. into bgp **65112**
+7. no bgp ipv4
+8. sei up route id
+9. set up 10.201.XX.1 and 10.201.XX.5 as 12345
+10. goto address-family
+11. active 10.201.XX.1 and 10.201.XX.5
+12. default-originate 10.201.XX.1 and 10.201.XX.5 **(no 99)**
+13. network 10.20.1/2.1,123.20.20.20 mask FF.FF.FF.FF
+14. aggregate 10.0.0.0 and 123.0.0.0
+
+
+##AS 34567 BGP
+
+*R8 R9 R10 R11*
+
+1. set up bgp no ipv4, router-id
+2. set other router as 34567, update lo
+3. goto address-family
+4. active and next-hop-self other router
+5. **redistribute**
+
+
+*R9*
+1. neighbor 30.34.1.1 as 30000
+2. bgp local-preference 500
+3. go to addr-family and active 30.34.1.1
+4. eigrp redistribute metric 1000 100 255 1 1500 b2e
+5. prefix-list perfix
+6. goto b2e permit
+7. match ip addr perfix
+
+
+*R11*
+1. bgp 34567
+2. nei 30.34.2.1 as 3W
+3. bgp preference 400
+4. nei 30.34.2.1 act
+5. eigrp redistribute metric 1000 100 255 1 1500 b2e
+6. prefix-list perfix
+7. goto b2e permit
+8. match ip addr perfix
+
