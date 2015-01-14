@@ -1,0 +1,19 @@
+router bgp 34567
+no bgp ipv4-unicast
+bgp router-id 123.10.10.10
+neighbor 123.8.8.8 remote-as 34567
+neighbor 123.8.8.8 update-sources Loopback 0
+neighbor 123.9.9.9 remote-as 34567
+neighbor 123.9.9.9 update-sources Loopback 0
+neighbor 123.11.11.11 remote-as 34567
+neighbor 123.11.11.11 update-sources Loopback 0
+address-family ipv4
+neighbor 123.8.8.8 activate
+neighbor 123.8.8.8 next-hop-self
+neighbor 123.9.9.9 activate
+neighbor 123.9.9.9 next-hop-self
+neighbor 123.10.10.10 activate
+neighbor 123.10.10.10 next-hop-self
+neighbor 123.11.11.11 activate
+neighbor 123.11.11.11 next-hop-self
+redistribute eigrp 34567

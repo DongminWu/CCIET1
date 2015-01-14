@@ -1,0 +1,7 @@
+router bgp 45678
+no bgp ipv4-unicast
+bgp router-id 123.17.17.17
+neighbor 203.45.17.1 remote-as 20003
+address-family ipv4
+neighbor 203.45.17.1 activate
+network 0.0.0.0 backdoor

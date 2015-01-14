@@ -11,6 +11,7 @@
 5. -(vrf forwarding COLOR)
 6. -set up ip address
 7. into bgp **12345**
+8. goto addr-family
 8. set up vrf as 65112
 9. active vrf
 
@@ -63,3 +64,35 @@
 7. goto b2e permit
 8. match ip addr perfix
 
+##AS 45678 BGP
+
+*R15*
+
+1. set up bgp no ipv4, router-id
+2. nei 103.45.1.1 as 10003
+3. addr ipv4: 103.145.1.1 active
+4. redistribute eigrp
+5. aggregate 123.20.1.0
+6. eigrp cisco->45678->topology-> redistribute bgp metric *no b2e*
+
+*R16 R17 R18 R19*
+
+1. bgp 45678(R18/R19:65222)
+2. no bgp ipv4, router id
+3. nei 203.45.16.1 as 20003
+4. addr family ipv4, nei 203.45.16.1 active
+5. set network 0.0.0.0 as backdoor
+
+*R18 R19*
+
+1. eigrp stub
+
+
+```
+##OSPFv3
+
+*SW4*
+
+1. set ipv6 unicast-routing and into ospf 1
+2. 
+```

@@ -11,6 +11,7 @@
 5. -(vrf forwarding COLOR)
 6. -set up ip address
 7. into bgp **12345**
+8. goto addr-family
 8. set up vrf as 65112
 9. active vrf
 
@@ -48,7 +49,7 @@
 2. bgp local-preference 500
 3. go to addr-family and active 30.34.1.1
 4. eigrp redistribute metric 1000 100 255 1 1500 b2e
-5. prefix-list perfix
+5. prefix-list permit
 6. goto b2e permit
 7. match ip addr perfix
 
@@ -59,7 +60,7 @@
 3. bgp preference 400
 4. nei 30.34.2.1 act
 5. eigrp redistribute metric 1000 100 255 1 1500 b2e
-6. prefix-list perfix
+6. prefix-list permit
 7. goto b2e permit
 8. match ip addr perfix
 

@@ -1,0 +1,12 @@
+router bgp 45678
+no bgp ipv4-unicast
+bgp router-id 123.15.15.15
+neighbor 103.145.1.1 remote 10003
+address-family ipv4
+neighbor 103.145.1.1 activate
+redistribute eigrp 45678
+aggregae 123.20.1.0 255.255.255.0 summary-only
+router eigrp cisco
+address-family ipv4 autonomous-system 45678
+topology base
+redistribute bgp 45678 1000 100 255 1 1500

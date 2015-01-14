@@ -1,0 +1,10 @@
+router bgp 65222
+no bgp ipv4-unicast
+bgp router-id 123.19.19.19
+neighbor 203.45.19.1 remote-as 20003
+address-family ipv4
+neighbor 203.45.19.1 activate
+network 0.0.0.0 backdoor
+
+router eigrp 45678
+eigrp stub
