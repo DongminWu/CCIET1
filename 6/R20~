@@ -1,0 +1,22 @@
+int e1/0
+no shutdown
+int e1/0.12
+encapsulation dot1Q 12
+ip address 10.201.12.2 255.255.255.252
+int e1/0.13
+encapsulation dot1Q 13
+ip address 10.201.13.2 255.255.255.252
+.....
+int e/0.99
+.... 
+int e1/1
+int e1/1.99
+encapsulation dot1Q 99
+ip address 10.201.99.6 255.255.255.252
+
+router bgp 65112
+no bgp ipv4-unicast
+bgp router-id 123.20.20.20
+neighbor 10.201.12.1 remote-as 12345
+neighbor 10.201.12.5 remote-as 12345
+neighbor 10.201.12.1 default-originate

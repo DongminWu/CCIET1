@@ -1,0 +1,54 @@
+ip vrf GREEN
+rd 12:12
+router-target 12:12
+ip vrf BLUE
+rd 13:13
+router-target 13:13
+ip vrf RED
+rd 14:14
+router-target 14:14
+ip vrf YELLOW
+rd 15:15
+router-target 15:15
+ip vrf INET
+rd 99:99
+router-target 99:99
+int e1/0
+no shutdown
+int e1/0.12
+encapsulation dot1Q 12
+ip vrf forwarding GREEN
+ip address 10.201.12.1 255.255.255.252
+int e1/0.13
+encapsulation dot1Q 13
+ip vrf forwarding BLUE
+ip address 10.201.13.1 255.255.255.252
+int e1/0.14
+encapsulation dot1Q 14
+ip vrf forwarding 14
+ip address 10.201.14.1 255.255.255.252
+int e1/0.15
+encapsulation dot1Q 15
+ip vrf forwarding 15
+ip address 10.201.15.1 255.255.255.252
+int e1/0.99
+encapsulation dot1Q 99
+ip vrf forwarding 99
+ip address 10.201.99.1 255.255.255.252
+
+router bgp 12345
+address-family ipv4 vrf GREEN
+neighbor 10.201.12.2 remote-as 65112
+neighbor 10.201.12.2 activate
+address-family ipv4 vrf BLUE
+neighbor 10.201.13.2 remote-as 65112
+neighbor 10.201.13.2 activate
+address-family ipv4 vrf RED
+neighbor 10.201.14.2 remote-as 65112
+neighbor 10.201.14.2 activate
+address-family ipv4 vrf YELLOW
+neighbor 10.201.15.2 remote-as 65112
+neighbor 10.201.15.2 activate
+address-family ipv4 vrf INET
+neighbor 10.201.99.2 remote-as 65112
+neighbor 10.201.99.2 activate
