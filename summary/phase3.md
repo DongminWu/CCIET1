@@ -27,9 +27,9 @@ you need to run ipv6 unicast-routing first
 
 *R12 R14*
 
-1. router 65112 remote as 20001
+1. router 65111 remote as 20001
 2. af ipv6, activate
-3. network 2001:123:12:12:12/128, 2001:CC1E:1234:12::/64
+3. network 2001:123::12:12:12/128, 2001:CC1E:1234:12::/64
 
 ## BGP policy
 
