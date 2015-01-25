@@ -1,0 +1,153 @@
+ip domain-name cisco.com
+username test privilege 1 password 1
+crypto key generate rsa
+768
+ip ssh maxstartups 5
+ip ssh logging events
+line vty 0 4
+login local
+transport input ssh
+access-class 1 in
+access-list 1 permit 123.10.2.0 0.0.0.255
+
+NAT
+
+access-list 2 permit 10.1.0.0 0.0.255.255
+ip nat inside source list 2 int loop 0 overload
+int e1.0/12-15
+ip nat inside
+int e1.0/99
+ip nat outside
+
+Net Flow
+
+ip cef
+int tu 0
+ip flow egress
+ip flow-top-talkers
+sort-by bytes
+cache-timeout 10000
+top 10
+
+access-list 2 permit 10.2.0.0 0.0.255.255
+ip nat inside source list 2 int loop 0 overload
+int e1/0.12
+ip nat inside
+int e1/0.99
+ip nat outside
+
+Net Flow
+
+ip cef
+int tu 0
+ip flow egress
+ip flow-top-talkers
+sort-by bytes
+cache-timeout 10000
+top 10
+
+NAT
+
+access-list 2 permit 10.1.0.0 0.0.255.255
+ip nat inside source list 2 int lo 0 overload
+int e1/0.12
+ip nat inside
+int e1/0.99
+ip nat outside
+
+Net Flow
+ip cef
+int tu 0
+ip flow egress
+ip flow-top-talkers
+sort-by bytes
+cache-timeout 10000
+to10
+
+
+
+ip cef
+int tu 0
+ip flow egress
+ip flow-top-talks
+sort-by bytes
+cache-timeouts 10000
+top 10
+
+
+
+ip cef 
+int tu 0
+ip flow egress
+ip flow-top-talkers
+sort-by bytes
+cache-timeouts 10000
+top 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+access-list 2 permit 10.1.0.0 0.0.255.255
+ip nat inside source list 2 int lo 0 overload
+int e1/0.12
+ip nat inside
+int e1/0.99
+ip nat outside
+
+
+
+
+
+
+net flow
+
+
+
+R17 
+
+
+
+ip cef
+int tu 0
+ip flow egress
+ip flow-top-talkers
+sort-by bytes
+cache-time 10000
+top 10
+
+
+
+
+
+
+
+
+ssh
+
+
+
+
+
+
+
+
+ip domain-name cisco.com
+username test privilege 1 password test
+crypto key generate rsa
+768
+ip ssh maxstartups 5
+ip ssh logging events
+line vty 0 4
+login local
+transport input ssh
+access-class 1 in
+access-list 1 permit 123.10.2.0 0.0.0.255

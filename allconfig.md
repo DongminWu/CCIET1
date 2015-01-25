@@ -79,6 +79,14 @@ router eigrp 34567
 network 123.0.0.0 0.255.255.255
 **int vl 34**
 delay 100
+ipv6 unicast-rou
+ipv6 router ospf 1
+router-id 123.203.3.3
+int lo 0
+ipv6 ospf 1 area 0
+int vl 34
+ipv6 ospf 1 area 0
+ipv6 ospf 1 pri 254
 
 ###SW4
 int ran e0/0-3
@@ -102,6 +110,14 @@ router eigrp 34567
 network 123.0.0.0 0.255.255.255
 **int vl 34**
 delay 100
+ipv6 unicast-rou
+ipv6 router ospf 1
+router 123.204.4.4
+int lo 0
+ipv6 ospf 1 area 0
+int vl 34
+ipv6 ospf 1 area 0
+ipv6 ospf 1 pri 255
 
 
 ###R18
@@ -138,6 +154,11 @@ nei 123.3.3.3 act
 nei 123.6.6.6 act
 nei 123.7.7.7 act
 nei iBGP route-reflect-client:w
+mpls ldp router-id lo 0 forc
+int e0/1
+mpls ip
+int e0/2
+mpls ip
 
 
 ###R2
@@ -208,6 +229,23 @@ nei 10.201.15.2 act
 addr ipv4 vrf INET
 nei 10.201.99.2 remote 65112
 nei 10.201.15.2 act
+router bgp 12345
+addr vpnv4
+nei 123.2.2.2 act
+nei 123.3.3.3 act
+nei 123.6.6.6 act
+nei 123.7.7.7 act
+nei iBGP route-reflect-client
+
+router bgp 12345
+addr vpnv4
+nei 123.1.1.1 act
+mpls ldp router lo 0 forc3
+int e0/1
+mpls ip
+int e0/2
+mpls ip
+no mpls propa
 
 
 
@@ -223,6 +261,12 @@ nei 123.1.1.1 remote 12345
 nei 123.1.1.1 update lo 0
 addr ipv4
 nei 123.1.1.1 act
+router bgp 12345
+addr vpnv4
+nei 123.1.1.1 act
+mpls ldp router-id lo 0 force
+int e0/0
+mpls ip
 
 ###R4
 router ospf 12345
@@ -247,6 +291,24 @@ nei 123.1.1.1 remote 12345
 nei 123.1.1.1 update lo 0
 addr ipv4
 nei 123.1.1.1 act
+ip prefix 123 permit 1.2.3.4/8 le 32
+bgp 12345
+addr ipv4 vrf GREEN
+nei 201.123.1.1 remote 20001
+nei 201.123.1.1 act
+nei 201.123.1.1 prefix 123 out
+addr ipv4 vrf BLUE
+nei 201.123.1.1 remote 20001
+nei 201.123.1.1 act
+nei 201.123.1.1 prefix 123 out
+addr ipv4 vrf INET
+nei 201.123.1.1 remote 20001
+nei 201.123.1.1 act
+nei 201.123.1.1 prefix 123 out
+router bgp 12345
+addr vpnv4
+nei 123.1.1.1 act
+
 
 
 
@@ -261,6 +323,23 @@ bgp router 123.7.7.7
 nei 123.1.1.1 remote 12345
 nei 123.1.1.1 update lo 0
 addr ipv4
+ip prefix 123 per 1.2.3.4/8 le 32
+nei bgp 12345
+addr ipv4 vrf BLUE
+nei 202.1.23.1.1 remote 20002
+nei 202.1.23.1.1 act
+nei 202.1.23.1.1 prefix 123 out
+addr ipv4 vrf RED
+nei 202.1.23.1.1 remote 20002
+nei 202.1.23.1.1 act
+nei 202.1.23.1.1 prefix 123 out
+addr ipv4 vrf INET
+nei 202.1.23.1.1 remote 20002
+nei 202.1.23.1.1 act
+nei 202.1.23.1.1 prefix 123 out
+123.1.1.1 act
+router bgp 12345
+addr bgp 12345
 nei 123.1.1.1 act
 
 
@@ -333,6 +412,24 @@ nei 123.9.9.9 act
 nei 123.11.11.11 act
 redis eigrp 34567
 
+ipv6 unicast-rou
+ipv6 router ospf 1
+router 123.10.10.10
+int lo 0
+ipv6 ospf 1 area 10
+router bgp 34567
+nei 2001:34:1::1 remote 20001
+addr ipv6
+nei 2001:34:1::1 act
+redistri ospf 1 match in ex
+ipv6 router ospf 1
+redistri bgp 34567
+ip prefix 123 permit 1.2.3.4/8 le 32
+router bgp 34567
+nei 201.34.1.1 remote 20001
+nei 201.34.1.1 act
+nei 201.34.1.1 prefix 123 out
+
 
 ###R11
 router eigrp 34567
@@ -363,6 +460,28 @@ ip prefix default permit 0.0.0.0/0
 route-map b2e permit 10
 match ip addr pre default
 
+ipv6 unicast-rou
+ipv6 router ospf 1
+router 123.11.11.11
+int lo 0
+ipv6 ospf 1 area 11
+
+router bgp 34567
+nei 2002:34:1::1 remote 20002
+addr ipv6
+nei 2002:34:1::1 act
+redistri ospf 1 match in ex
+
+ipv6 router ospf 1 
+redistri bgp 34567
+
+router bgp 34567
+nei 202.34.1.1 remote 20002
+addr ipv4
+nei 202.34.1.1 act
+nei 202.34.1.1 prefix 123 out
+
+ 
 
 ###R15
 router eigrp cisco 
@@ -395,24 +514,48 @@ bgp router 123.16.16.16
 nei 203.45.16.1 remote 20003
 addr ipv4
 nei 203.45.16.1 act
+net 0.0.0.0 backdoor
 
 ###R17
+
 router eigrp cisco 
 addr ipv4 auto 45678
 **network 123.0.0.0 0.255.255.255**
 topo base
 no auto
+router bgp 34567
+no bgp def ipv4
+bgp router-id 123.17.17.17
+nei 203.45.17.1 remote 20003
+addr ipv4
+nei 203.45.17.1 act
+nei 0.0.0.0 backdoor
 
 
 ###R18
+
 router eigrp 45678
 **network 123.0.0.0 0.255.255.255**
 no auto
+router bgp 45678
+no bgp def ipv4
+bgp router 123.18.18.18
+nei 203.45.15.1 remote 20003
+addr ipv4
+nei 203.45.15.1 act
+net 0.0.0.0 backdoor
 
 ###R19
 router eigrp 45678
 **network 123.0.0.0 0.255.255.255**
 no auto
+router bgp 45678
+no bgp def ipv4
+nei 203.45.15.1 remote 20003
+addr ipv4
+nei 203.45.15.1 act
+net 0.0.0.0 backdoor
+
 
 ###SW5
 router eigrp 45678
@@ -478,3 +621,24 @@ network 123.20.20.20 255.255.255.255
 aggre 10.0.0.0 255.0.0.0 summ
 aggre 123.0.0.0 255.0.0.0 summ
 
+###R12
+router bgp 65111
+nei 2001:65:1::1 remote 20001
+addr ipv6
+nei 2001:65:1::1 act
+network 2001:123::12:12:12/128
+network 2001:CC1E:1234:12::/64
+
+
+###R14
+router bgp 65111
+nei 2002:65:2:2::2 remote 20002
+addr ipv6
+nei 2002:65:2:2::2 act
+network 2001:123::14:14:14/128
+network 2001:CC1E:1234:14::/64
+
+###R13
+router bgp 65111
+addr ipv4
+nei 202.65.1.1 wei 1000
